@@ -8,15 +8,26 @@ import com.mongodb.DBObject;
 
 public class Sucursal {
 	private int idSucursal;
+	private String nombre;
 	private Domicilio domicilio;
 	private Empleado encargado;
 	private List<Empleado> empleados;
-	public Sucursal(Domicilio domicilio, Empleado encargado) {
+	public Sucursal(Domicilio domicilio, Empleado encargado,String nombre) {
 		
 		this.domicilio = domicilio;
 		this.encargado = encargado;
 		this.empleados = new ArrayList<Empleado>();
+		this.nombre = nombre;
 	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
 	public int getIdSucursal() {
 		return idSucursal;
 	}
@@ -55,7 +66,7 @@ public class Sucursal {
 	}
 	
 	public DBObject objectToJson() {
-		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
+		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("nombre", this.getNombre()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
 	    return sucursal;
 	}
 	

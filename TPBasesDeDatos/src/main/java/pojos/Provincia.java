@@ -10,6 +10,9 @@ public class Provincia {
 		
 		this.nombre = nombre;
 	}
+    public Provincia() {
+		
+	}
 	public int getIdProvincia() {
 		return idProvincia;
 	}
@@ -25,6 +28,10 @@ public class Provincia {
 	public DBObject objectToJson() {
 		DBObject provincia = new BasicDBObject("nombre",this.getNombre());
 		return provincia;
+	}
+	public Provincia jsonToObject(BasicDBObject provincia) {
+		Provincia p = new Provincia(provincia.getString("nombre"));
+		return p;
 	}
 	
 	

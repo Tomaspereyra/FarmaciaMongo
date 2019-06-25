@@ -1,5 +1,6 @@
 package pojos;
-import java.math.BigDecimal;
+
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -10,15 +11,15 @@ public class Venta {
 	private int idVenta;
 	private GregorianCalendar fecha;
 	private String nroTicket;
-	private BigDecimal total;
+	private float total;
 	private FormaDePago formaDePago;
 	private Cliente cliente;
 	private Empleado empleadoAtencion;
 	private Empleado empleadoCaja;
 	private List<ItemVenta> itemsVenta;
 	// Total calculado
-	public Venta(GregorianCalendar fecha, String nroTicket, BigDecimal total, FormaDePago formaDePago,
-			Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja, List<ItemVenta> itemsVenta) {
+	public Venta(GregorianCalendar fecha, String nroTicket, float total, FormaDePago formaDePago,
+			Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
 		
 		this.fecha = fecha;
 		this.nroTicket = nroTicket;
@@ -27,7 +28,7 @@ public class Venta {
 		this.cliente = cliente;
 		this.empleadoAtencion = empleadoAtencion;
 		this.empleadoCaja = empleadoCaja;
-		this.itemsVenta = itemsVenta;
+		this.itemsVenta = new ArrayList<ItemVenta>();
 	}
 	public int getIdVenta() {
 		return idVenta;
@@ -47,10 +48,10 @@ public class Venta {
 	public void setNroTicket(String nroTicket) {
 		this.nroTicket = nroTicket;
 	}
-	public BigDecimal getTotal() {
+	public float getTotal() {
 		return total;
 	}
-	public void setTotal(BigDecimal total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 	public FormaDePago getFormaDePago() {
@@ -82,6 +83,9 @@ public class Venta {
 	}
 	public void setItemsVenta(List<ItemVenta> itemsVenta) {
 		this.itemsVenta = itemsVenta;
+	}
+	public void agregarItem(ItemVenta item) {
+		this.itemsVenta.add(item);
 	}
 	
 	public DBObject objectToJson() {

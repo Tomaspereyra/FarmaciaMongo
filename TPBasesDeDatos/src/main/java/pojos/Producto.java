@@ -1,22 +1,40 @@
 package pojos;
-import java.math.BigDecimal;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 public class Producto {
 	private int idProducto;
+	private String nombre;
+	private String tipo;
 	private String descripcion;
 	private Laboratorio laboratorio;
 	private int codigo;
-	private BigDecimal precio;
-	public Producto(int idProducto, String descripcion, Laboratorio laboratorio, int codigo, BigDecimal precio) {
-		
-		this.idProducto = idProducto;
+	private double precio;
+	public Producto(String nombre,String tipo, String descripcion, Laboratorio laboratorio, int codigo, double precio) {
 		this.descripcion = descripcion;
 		this.laboratorio = laboratorio;
 		this.codigo = codigo;
 		this.precio = precio;
+		this.nombre = nombre;
+		this.tipo = tipo;
 	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public int getIdProducto() {
 		return idProducto;
 	}
@@ -41,15 +59,15 @@ public class Producto {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	public BigDecimal getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(BigDecimal precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 	
 	public DBObject objectToJson() {
-	DBObject producto = new BasicDBObject ("descripcion", this.getDescripcion()).append("laboratorio",this.getLaboratorio().objectToJson()).append("codigo", this.getCodigo()).append("precio",this.getPrecio());	
+	DBObject producto = new BasicDBObject ("descripcion", this.getDescripcion()).append("nombre", this.getNombre()).append("laboratorio",this.getLaboratorio().objectToJson()).append("codigo", this.getCodigo()).append("precio",this.getPrecio());	
 	return producto;
 	}
 	

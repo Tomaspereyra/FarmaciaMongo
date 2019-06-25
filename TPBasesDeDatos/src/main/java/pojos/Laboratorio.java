@@ -6,9 +6,11 @@ import com.mongodb.DBObject;
 public class Laboratorio {
 	private int idLaboratorio;
 	private String nombre;
-	public Laboratorio(String nombre) {
-	
+	public Laboratorio(String nombre) {	
 		this.nombre = nombre;
+	}
+	public Laboratorio() {
+	
 	}
 	public int getIdLaboratorio() {
 		return idLaboratorio;
@@ -26,5 +28,11 @@ public class Laboratorio {
 	public DBObject objectToJson() {
 		DBObject laboratorio = new BasicDBObject("nombre",this.getNombre());
 		return laboratorio;
+	}
+	
+	public Laboratorio jsonToObject(BasicDBObject l ) {
+		Laboratorio laboratorio = new Laboratorio(l.getString("nombre"));
+		return laboratorio;
+		
 	}
 }

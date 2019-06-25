@@ -60,4 +60,11 @@ public DBObject objectToJson() {
 	
 	return persona;
 }
+
+@Override
+public String toString() {
+	return "Persona [idPersona=" + idPersona + ", apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni
+			+ ", domicilio=" + domicilio + "]";
+}
+
 }

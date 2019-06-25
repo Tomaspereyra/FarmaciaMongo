@@ -14,8 +14,8 @@ import pojos.Domicilio;
 import pojos.ObraSocial;
 
 public class ClienteDao {
-	 MongoClient mongoClient;
-     DB database;
+	 private MongoClient mongoClient;
+     private DB database;
 	public ClienteDao() throws UnknownHostException {
 		this.mongoClient = new MongoClient();
 		this.database = mongoClient.getDB("farmacia");
@@ -24,20 +24,23 @@ public class ClienteDao {
 	public void agregarCliente(String apellido, String nombre,int dni, Domicilio domicilio, ObraSocial obraSocial) {
 		Cliente cliente = new Cliente(apellido,nombre,dni,domicilio,obraSocial);
 		
-		DBCollection collection = database.getCollection("Clientes");
+		DBCollection collection = database.getCollection("clientes");
 	     
 	    collection.insert(cliente.objectToJson());
 		
 	}
 	
-	public DBObject traerCliente(int dni) {
-
-		DBCollection collection = database.getCollection("Clientes");
+	public Cliente traerCliente(int dni) {
+        
+		DBCollection collection = database.getCollection("clientes");
 	     
 		DBObject query = new BasicDBObject("dni", dni);
 		DBCursor cursor = collection.find(query);
-		DBObject jo = cursor.one();
-	    return jo;
+		BasicDBObject cliente = (BasicDBObject)cursor.one();
+		Domicilio d = new Domicilio();
+		Cliente c = new Cliente(cliente.getString("apellido"),cliente.getString("nombre"),cliente.getInt("dni"),d.jsonToObject((BasicDBObject) cliente.get("domicilio")));
+
+	    return c;
 		
 	}
      
