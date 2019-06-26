@@ -116,7 +116,21 @@ public class Venta {
 		
 	}
 	
-	//ublic Venta(GregorianCalendar fecha, String nroTicket, BigDecimal total, FormaDePago formaDePago,
-		//	Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja, List<ItemVenta> itemsVenta)
+	public List<DBObject> listToJson() {
+		List<DBObject> itemsVentaJSON = new ArrayList<DBObject>();
+			for(int i=0;i<this.itemsVenta.size();i++) {
+				itemsVentaJSON.add(this.itemsVenta.get(i).objectToJson());
+			}
+		return itemsVentaJSON;
+	}
+	
+	public List<ItemVenta> jsonToListItemVenta() {
+		List<ItemVenta> itemVentaList = new ArrayList<ItemVenta>();
+		List<DBObject> itemsVentaJSON = new ArrayList<DBObject>();	
+			for(int i=0;i<itemsVentaJSON.size();i++) {
+				itemVentaList.add( JsonToObjectClass.jsonToItemVenta((BasicDBObject) itemsVentaJSON.get(i)));
+			}
+		return itemVentaList;
+	}
 	
 }

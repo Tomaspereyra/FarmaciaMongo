@@ -97,7 +97,7 @@ public class JsonToObjectClass {
 		Domicilio d= jsonToDomicilio((BasicDBObject) sucursal.get("domicilio"));
 		Empleado e= jsonToEmpleado((BasicDBObject) sucursal.get("empleado"));
 		Sucursal s= new Sucursal(d,e,sucursal.getString("nombre"));
-		//ACA HABRIA QUE VER COMO SETEARLE LA LISTA DESDE EL JSON Y DEVOLVERLA JUNTO CON LA SUCURSAL//
+		s.setEmpleados(s.jsonToListEmpleado()); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
 		return s;
 	}
 	
@@ -107,7 +107,7 @@ public class JsonToObjectClass {
 		Empleado e1= jsonToEmpleado((BasicDBObject) venta.get("empleadoAtencion"));
 		Empleado e2= jsonToEmpleado((BasicDBObject) venta.get("empleadoCaja"));
 		Venta v= new Venta(venta.getDate("fecha").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), venta.getString("nroTicket"), venta.getDouble("total"), f, c, e1, e2);
-		//ACA HABRIA QUE VER COMO SETEARLE LA LISTA DESDE EL JSON Y DEVOLVERLA JUNTO CON LA VENTA//
+		v.setItemsVenta(v.jsonToListItemVenta()); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
 		return v;
 	}
 	

@@ -66,11 +66,20 @@ public class Sucursal {
 	}
 	
 	public List<DBObject> listToJson() {
-	List<DBObject> empleadosJSON = new ArrayList<DBObject>();
-	for(int i=0;i<this.empleados.size();i++) {
-		empleadosJSON.add(this.empleados.get(i).objectToJson());
+		List<DBObject> empleadosJSON = new ArrayList<DBObject>();
+			for(int i=0;i<this.empleados.size();i++) {
+				empleadosJSON.add(this.empleados.get(i).objectToJson());
+			}
+		return empleadosJSON;
 	}
-	return empleadosJSON;
+	
+	public List<Empleado> jsonToListEmpleado() {
+		List<Empleado> empleadoList = new ArrayList<Empleado>();
+		List<DBObject> empleadosJSON = listToJson();	
+			for(int i=0;i<empleadosJSON.size();i++) {
+				empleadoList.add( JsonToObjectClass.jsonToEmpleado((BasicDBObject) empleadosJSON.get(i)));
+			}
+		return empleadoList;
 	}
 	
 	public DBObject objectToJson() {
