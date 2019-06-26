@@ -14,6 +14,8 @@ import pojos.Venta;
 
 import java.math.BigDecimal;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class Test {
 		Laboratorio laboratorio = new Laboratorio("bayer");
    
     
-	 /* Sucursal
+	 /* Carga Sucursal
 	 Empleado encargado = new Empleado("apellido","nombre", 12345678,domicilio,"20-999999-7");
 	 Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
 	 Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
@@ -51,27 +53,26 @@ public class Test {
      sucursalDao.agregarSucursal(sucursal);
      */
 	
-	  // Clientes
+	  // Carga Clientes
 	 /*clienteDao.agregarCliente("Otegui", "Luciano",22222222,domicilio,obraSocial);
 	 clienteDao.agregarCliente("Paz", "Agustin",33333333,domicilio,obraSocial);
 	 clienteDao.agregarCliente("Rios", "Martin",44444444,domicilio,obraSocial);*/
 	
-	/* productos	
+	/* carga Productos	
 	productoDao.agregarProducto("Ibuprofeno","Farmacia","descripcion de un Ibuprofeno", laboratorio, 1234, 50);
 	productoDao.agregarProducto("perfume","Perfumeria","descripcion de un Perfume", laboratorio, 1234, 500);*/
-		
-		Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
-		Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
-		FormaDePago formaDePago = new FormaDePago("Efectivo");
 	
-	   Venta venta = new Venta(new GregorianCalendar(),"0001-12345678",500,formaDePago,clienteDao.traerCliente(22222222),atencion,caja);
-	   
-	   ItemVenta item = new ItemVenta(productoDao.traerProducto("perfume"),1);
-	   VentaDao ventaDao = new VentaDao();
-	   
-	   venta.agregarItem(item);
-	   
-	   //ventaDao.agregarVenta(venta);
+	//Carga ventas
+	Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
+	Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
+	FormaDePago formaDePago = new FormaDePago("Efectivo");
+    Venta venta = new Venta(new Date(),"0001-12345678",500,formaDePago,clienteDao.traerCliente(22222222),atencion,caja);	   
+	ItemVenta item = new ItemVenta(productoDao.traerProducto("perfume"),1);
+	
+	VentaDao ventaDao = new VentaDao();   
+	venta.agregarItem(item);	   
+    
+	ventaDao.agregarVenta(venta);
 
 	   
 

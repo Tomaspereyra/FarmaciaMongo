@@ -2,6 +2,7 @@ package pojos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.mongodb.BasicDBObject;
@@ -9,7 +10,7 @@ import com.mongodb.DBObject;
 
 public class Venta {
 	private int idVenta;
-	private LocalDate fecha;
+	private Date fecha;
 	private String nroTicket;
 	private double total;
 	private FormaDePago formaDePago;
@@ -19,7 +20,7 @@ public class Venta {
 	private List<ItemVenta> itemsVenta;
 	
 	// Total calculado
-	public Venta(LocalDate fecha, String nroTicket, double total, FormaDePago formaDePago,
+	public Venta(Date fecha, String nroTicket, double total, FormaDePago formaDePago,
 			Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
 		
 		this.fecha = fecha;
@@ -40,11 +41,11 @@ public class Venta {
 		this.idVenta = idVenta;
 	}
 	
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 	
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	
@@ -111,7 +112,7 @@ public class Venta {
 	public DBObject objectToJson() {
 		DBObject venta = new BasicDBObject("fecha",this.getFecha()).append("nroTicket",this.getNroTicket()).append("total",this.getTotal()).append(
 				"formaDePago",this.getFormaDePago().objectToJson()).append("cliente",this.getCliente().objectToJson()).append("empleadoAtencion",this.getEmpleadoAtencion().objectToJson()).append(
-						"empleadoCaja",this.getEmpleadoCaja().objectToJson()).append("itemsVenta",this.getItemsVenta());
+						"empleadoCaja",this.getEmpleadoCaja().objectToJson()).append("itemsVenta",this.listToJson());
 		return venta;
 		
 	}

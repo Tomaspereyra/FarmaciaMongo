@@ -2,6 +2,7 @@ package dao;
 
 import java.net.UnknownHostException;
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -26,14 +27,14 @@ public class VentaDao {
 	}
 	
 	
-	public void agregarVenta(LocalDate fecha, String nroTicket, double total, FormaDePago formaDePago, Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
+	public void agregarVenta(Date fecha, String nroTicket, double total, FormaDePago formaDePago, Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
 		Venta venta=new Venta(fecha, nroTicket, total, formaDePago, cliente, empleadoAtencion, empleadoCaja);
 		DBCollection ventas = database.getCollection("ventas");
 		ventas.insert(venta.objectToJson());	
 	}
 		
 	public void agregarVenta(Venta venta) {
-		DBCollection ventas = database.getCollection("ventas");
+		DBCollection ventas = database.getCollection("ventas");		
 		ventas.insert(venta.objectToJson());	
 	}
 	

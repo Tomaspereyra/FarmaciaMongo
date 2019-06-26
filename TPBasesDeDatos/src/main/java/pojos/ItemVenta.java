@@ -1,5 +1,8 @@
 package pojos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -32,6 +35,7 @@ public class ItemVenta {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+	
 	
 	public DBObject objectToJson() {
 		DBObject itemVenta = new BasicDBObject ("producto",this.getProducto().objectToJson()).append("cantidad", this.getCantidad());
