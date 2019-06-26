@@ -1,7 +1,7 @@
 package pojos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.mongodb.BasicDBObject;
@@ -9,16 +9,17 @@ import com.mongodb.DBObject;
 
 public class Venta {
 	private int idVenta;
-	private GregorianCalendar fecha;
+	private LocalDate fecha;
 	private String nroTicket;
-	private float total;
+	private double total;
 	private FormaDePago formaDePago;
 	private Cliente cliente;
 	private Empleado empleadoAtencion;
 	private Empleado empleadoCaja;
 	private List<ItemVenta> itemsVenta;
+	
 	// Total calculado
-	public Venta(GregorianCalendar fecha, String nroTicket, float total, FormaDePago formaDePago,
+	public Venta(LocalDate fecha, String nroTicket, double total, FormaDePago formaDePago,
 			Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
 		
 		this.fecha = fecha;
@@ -30,60 +31,79 @@ public class Venta {
 		this.empleadoCaja = empleadoCaja;
 		this.itemsVenta = new ArrayList<ItemVenta>();
 	}
+	
 	public int getIdVenta() {
 		return idVenta;
 	}
+	
 	public void setIdVenta(int idVenta) {
 		this.idVenta = idVenta;
 	}
-	public GregorianCalendar getFecha() {
+	
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(GregorianCalendar fecha) {
+	
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
+	
 	public String getNroTicket() {
 		return nroTicket;
 	}
+	
 	public void setNroTicket(String nroTicket) {
 		this.nroTicket = nroTicket;
 	}
-	public float getTotal() {
+	
+	public double getTotal() {
 		return total;
 	}
-	public void setTotal(float total) {
+	
+	public void setTotal(double total) {
 		this.total = total;
 	}
+	
 	public FormaDePago getFormaDePago() {
 		return formaDePago;
 	}
+	
 	public void setFormaDePago(FormaDePago formaDePago) {
 		this.formaDePago = formaDePago;
 	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
 	public Empleado getEmpleadoAtencion() {
 		return empleadoAtencion;
 	}
+	
 	public void setEmpleadoAtencion(Empleado empleadoAtencion) {
 		this.empleadoAtencion = empleadoAtencion;
 	}
+	
 	public Empleado getEmpleadoCaja() {
 		return empleadoCaja;
 	}
+	
 	public void setEmpleadoCaja(Empleado empleadoCaja) {
 		this.empleadoCaja = empleadoCaja;
 	}
+	
 	public List<ItemVenta> getItemsVenta() {
 		return itemsVenta;
 	}
+	
 	public void setItemsVenta(List<ItemVenta> itemsVenta) {
 		this.itemsVenta = itemsVenta;
 	}
+	
 	public void agregarItem(ItemVenta item) {
 		this.itemsVenta.add(item);
 	}

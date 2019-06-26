@@ -5,11 +5,13 @@ import java.net.UnknownHostException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 import pojos.Domicilio;
 import pojos.Empleado;
+import pojos.JsonToObjectClass;
 import pojos.Sucursal;
 
 public class SucursalDao {
@@ -22,16 +24,13 @@ public class SucursalDao {
 	}
 
 	public void agregarSucursal(Domicilio domicilio, Empleado encargado, String nombre) throws UnknownHostException {
-
 		Sucursal nuevaSucursal = new Sucursal(domicilio, encargado, nombre);
 		DBCollection sucursales = database.getCollection("sucursales");
 		sucursales.insert(nuevaSucursal.objectToJson());
 
 	}
 
-	public void agregarSucursal(Sucursal sucursal) throws UnknownHostException {
-
-		
+	public void agregarSucursal(Sucursal sucursal) throws UnknownHostException {	
 		DBCollection sucursales = database.getCollection("sucursales");
 		sucursales.insert(sucursal.objectToJson());
 
@@ -41,7 +40,15 @@ public class SucursalDao {
 		DBCollection sucursales = database.getCollection("sucursales"); // trae la colleccion
 		DBObject query = new BasicDBObject("nombre", nombre); // creo la query
 		sucursales.update(query, sucursalActualizada.objectToJson());
-
+	}
+	
+	public Sucursal traerSucursal(String nombre) {
+		DBCollection sucursales = database.getCollection("sucursales");
+		DBObject query = new BasicDBObject("nombre",nombre);
+		DBCursor cursor = sucursales.find(query);
+		BasicDBObject sucursalJSON = (BasicDBObject) cursor.one();
+		
+		return JsonToObjectClass.jsonToSucursal(sucursalJSON);		
 	}
 
 }

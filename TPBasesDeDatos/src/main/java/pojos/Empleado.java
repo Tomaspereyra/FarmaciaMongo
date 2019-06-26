@@ -11,29 +11,23 @@ public class Empleado extends Persona {
 		this.cuil = cuil;
 		
 	}
-	
 
 	public String getCuil() {
 		return cuil;
 	}
+	
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
-	}
-	
+	}	
 	
 	public DBObject objectToJson() {
 		DBObject empleado = new BasicDBObject("nombre",this.getNombre()).append("apellido",this.getApellido()).append("dni",this.getDni()).append("domicilio",this.getDomicilio().objectToJson()).append("cuil", this.getCuil());
 	    return empleado;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Empleado [cuil=" + cuil + ", toString()=" + super.toString() + "]";
 	}
 
-
-	
-	
-	
 }

@@ -2,17 +2,25 @@ package pojos;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+
 public class ItemVenta {
 	private Producto producto;
 	private int cantidad;
+	
 	// Subtotal calculado
 	public ItemVenta(Producto producto, int cantidad) {
 		this.producto = producto;
 		this.cantidad = cantidad;
 	}
+	
+	public ItemVenta() {
+		
+	}
+	
 	public Producto getProducto() {
 		return producto;
 	}
+	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
@@ -20,6 +28,7 @@ public class ItemVenta {
 	public int getCantidad() {
 		return cantidad;
 	}
+	
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}

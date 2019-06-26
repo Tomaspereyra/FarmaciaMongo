@@ -10,6 +10,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 import pojos.Domicilio;
+import pojos.JsonToObjectClass;
 import pojos.Localidad;
 import pojos.Provincia;
 
@@ -35,19 +36,27 @@ public class DomicilioDao {
 
 	}
 
-public Domicilio traerDomicilio(String calle, int numero) {
+	public Domicilio traerDomicilio(String calle, int numero) {
+		
+		DBCollection domicilios = database.getCollection("domicilios");
+		DBObject query = new BasicDBObject();
+		query.put("calle", calle);
+		query.put("numero", numero);
+		
+		DBCursor cursor = domicilios.find(query);
+		
+		BasicDBObject domicilioJSON = (BasicDBObject)cursor.one();
+		  
+		return JsonToObjectClass.jsonToDomicilio(domicilioJSON);
+	}
 	
-	DBCollection domicilios = database.getCollection("domicilios");
-	DBObject query = new BasicDBObject();
-	query.put("calle", calle);
-	query.put("numero", numero);
-	
-	DBCursor cursor = domicilios.find(query);
-	
-	BasicDBObject domicilioJSON = (BasicDBObject)cursor.one();
-	Domicilio d = new Domicilio(domicilioJSON.getString("calle"),domicilioJSON.getInt("numero"));
-    
-	return d;
-}
+	public void actualizarDomicilio(String calle,int numero, Domicilio domicilioActualizado) {
+		DBCollection domicilios = database.getCollection("domicilios");
+		DBObject query = new BasicDBObject();
+		query.put("calle", calle);
+		query.put("numero", numero);
+		domicilios.update(query, domicilioActualizado.objectToJson());
+
+	}
 
 }

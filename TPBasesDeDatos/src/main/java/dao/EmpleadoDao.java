@@ -11,6 +11,7 @@ import com.mongodb.MongoClient;
 
 import pojos.Domicilio;
 import pojos.Empleado;
+import pojos.JsonToObjectClass;
 
 public class EmpleadoDao {
 	private MongoClient mongoClient;
@@ -28,22 +29,28 @@ public class EmpleadoDao {
 		empleados.insert(empleado.objectToJson());
 
 	}
+	
+	public void agregarEmpleado(Empleado empleado) {
+		DBCollection empleados = database.getCollection("empleados");
+		empleados.insert(empleado.objectToJson());
+
+	}
 
 	public Empleado traerEmpleado(int dni) {
-
 		DBCollection collection = database.getCollection("empleados");
 
 		DBObject query = new BasicDBObject("dni", dni);
 		DBCursor cursor = collection.find(query);
 		BasicDBObject empleadoJSON = (BasicDBObject) cursor.one();
 
-		Domicilio d = new Domicilio();
+		return JsonToObjectClass.jsonToEmpleado(empleadoJSON);
 
-		Empleado empleadoOBJ = new Empleado(empleadoJSON.getString("apellido"), empleadoJSON.getString("nombre"),
-				empleadoJSON.getInt("dni"), d.jsonToObject((BasicDBObject) empleadoJSON.get("domicilio")),
-				empleadoJSON.getString("cuil"));
-
-		return empleadoOBJ;
+	}
+	
+	public void actualizarEmpleados(int dni, Empleado empleadoActualizado) {
+		DBCollection empleados = database.getCollection("empleados");
+		DBObject query = new BasicDBObject("dni", dni);
+		empleados.update(query, empleadoActualizado.objectToJson());
 
 	}
 

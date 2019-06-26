@@ -1,5 +1,6 @@
 package pojos;
 
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 public class Producto {
@@ -10,6 +11,11 @@ public class Producto {
 	private Laboratorio laboratorio;
 	private int codigo;
 	private double precio;
+	
+	public Producto() {
+		
+	}
+	
 	public Producto(String nombre,String tipo, String descripcion, Laboratorio laboratorio, int codigo, double precio) {
 		this.descripcion = descripcion;
 		this.laboratorio = laboratorio;
@@ -70,6 +76,7 @@ public class Producto {
 	DBObject producto = new BasicDBObject ("descripcion", this.getDescripcion()).append("nombre", this.getNombre()).append("laboratorio",this.getLaboratorio().objectToJson()).append("codigo", this.getCodigo()).append("precio",this.getPrecio());	
 	return producto;
 	}
+	
 	
 	
 }
