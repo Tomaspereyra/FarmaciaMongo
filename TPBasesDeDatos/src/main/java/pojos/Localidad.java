@@ -36,6 +36,12 @@ public class Localidad {
 	    
 		return localidad;
 	}
+
+	@Override
+	public String toString() {
+		return "Localidad [idLocalidad=" + idLocalidad + ", nombre=" + nombre + "]";
+	}
+	
 	
 	
 }

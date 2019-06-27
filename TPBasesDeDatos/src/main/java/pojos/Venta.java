@@ -1,6 +1,5 @@
 package pojos;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,6 +106,7 @@ public class Venta {
 	
 	public void agregarItem(ItemVenta item) {
 		this.itemsVenta.add(item);
+		this.calcularTotal();
 	}
 	
 	public DBObject objectToJson() {

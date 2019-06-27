@@ -3,6 +3,7 @@ package pojos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -73,11 +74,11 @@ public class Sucursal {
 		return empleadosJSON;
 	}
 	
-	public List<Empleado> jsonToListEmpleado() {
+	public List<Empleado> jsonToListEmpleado(BasicDBList empleadoJSON) {
 		List<Empleado> empleadoList = new ArrayList<Empleado>();
-		List<DBObject> empleadosJSON = listToJson();	
-			for(int i=0;i<empleadosJSON.size();i++) {
-				empleadoList.add( JsonToObjectClass.jsonToEmpleado((BasicDBObject) empleadosJSON.get(i)));
+		
+			for(int i=0;i<empleadoJSON.size();i++) {
+				empleadoList.add( JsonToObjectClass.jsonToEmpleado((BasicDBObject) empleadoJSON.get(i)));
 			}
 		return empleadoList;
 	}
@@ -86,5 +87,13 @@ public class Sucursal {
 		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("_id", this.getIdSucursal()).append("nombre", this.getNombre()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
 	    return sucursal;
 	}
+
+	@Override
+	public String toString() {
+		return "Sucursal [idSucursal=" + idSucursal + ", nombre=" + nombre + ", domicilio=" + domicilio + ", encargado="
+				+ encargado + ", empleados=" + empleados + "]";
+	}
+	
+	
 	
 }

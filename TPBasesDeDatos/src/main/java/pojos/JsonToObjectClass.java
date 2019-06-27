@@ -1,6 +1,5 @@
 package pojos;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class JsonToObjectClass {
 		Domicilio d= jsonToDomicilio((BasicDBObject) sucursal.get("domicilio"));
 		Empleado e= jsonToEmpleado((BasicDBObject) sucursal.get("empleado"));
 		Sucursal s= new Sucursal(d,e,sucursal.getString("nombre"));
-		s.setEmpleados(s.jsonToListEmpleado()); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
+		s.setEmpleados(s.jsonToListEmpleado((BasicDBList) sucursal.get("empleados"))); 
 		return s;
 	}
 	
@@ -112,7 +111,7 @@ public class JsonToObjectClass {
 		Empleado e2= jsonToEmpleado((BasicDBObject) venta.get("empleadoCaja"));
 		Venta v= new Venta(venta.getDate("fecha"), venta.getString("nroTicket"), f, c, e1, e2);
 		v.setTotal( venta.getDouble("total"));
-		v.setItemsVenta(v.jsonToListItemVenta((BasicDBList)venta.get("itemsVenta"))); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
+		v.setItemsVenta(v.jsonToListItemVenta((BasicDBList)venta.get("itemsVenta"))); 
 		return v;
 	}
 	
