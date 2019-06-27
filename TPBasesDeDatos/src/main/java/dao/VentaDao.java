@@ -7,10 +7,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
+
 import com.mongodb.AggregationOptions;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
 import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -18,6 +21,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ReadPreference;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
@@ -213,5 +218,28 @@ public class VentaDao {
 		}
 		return ventasFiltro;
 	}
+	
+	public void rankingProductos() {
+		 Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };
+		MongoDatabase db = mongoClient.getDatabase("farmacia");
+		MongoCollection<Document> collection = db.getCollection("ventas");
+		collection.aggregate(
+			      Arrays.asList(
+			              //Aggregates.match(Filters.eq("categories", "Bakery")),
+			              //Aggregates.group("$itemsVenta.producto.nombre", Accumulators.sum("count", 1)),
+			           
+			              Aggregates.unwind("$itemsVenta"),
+			              Aggregates.sortByCount("$itemsVenta")
+			              
+			      )
+			).forEach(printBlock);
+		
+	}
+	
 
 }

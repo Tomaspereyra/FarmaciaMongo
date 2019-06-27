@@ -115,7 +115,9 @@ public class Test {
 		//Detalle de ventas para la cadena completa por fecha y por tipo de producto
         System.out.println(ventaDao.traerVentasTipo("0001", fechaInicial, fechaFinal, "farmacia"));
 		
-
+        //5
+        //Detalle de ventas por productos para toda la cadena
+        ventaDao.rankingProductos();
 	   
 
 	 
