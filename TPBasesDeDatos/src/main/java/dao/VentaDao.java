@@ -18,7 +18,6 @@ import pojos.Cliente;
 import pojos.Empleado;
 import pojos.FormaDePago;
 import pojos.JsonToObjectClass;
-import pojos.Sucursal;
 import pojos.Venta;
 
 public class VentaDao {
@@ -30,9 +29,9 @@ public class VentaDao {
 		this.database = mongoClient.getDB("farmacia");
 	}
 
-	public void agregarVenta(Date fecha, String nroTicket, double total, FormaDePago formaDePago, Cliente cliente,
+	public void agregarVenta(Date fecha, String nroTicket, FormaDePago formaDePago, Cliente cliente,
 			Empleado empleadoAtencion, Empleado empleadoCaja) {
-		Venta venta = new Venta(fecha, nroTicket, total, formaDePago, cliente, empleadoAtencion, empleadoCaja);
+		Venta venta = new Venta(fecha, nroTicket, formaDePago, cliente, empleadoAtencion, empleadoCaja);
 		DBCollection ventas = database.getCollection("ventas");
 		ventas.insert(venta.objectToJson());
 	}

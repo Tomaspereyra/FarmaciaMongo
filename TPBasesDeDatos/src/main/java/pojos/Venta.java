@@ -21,12 +21,11 @@ public class Venta {
 	private List<ItemVenta> itemsVenta;
 	
 	// Total calculado
-	public Venta(Date fecha, String nroTicket, double total, FormaDePago formaDePago,
+	public Venta(Date fecha, String nroTicket, FormaDePago formaDePago,
 			Cliente cliente, Empleado empleadoAtencion, Empleado empleadoCaja) {
 		
 		this.fecha = fecha;
 		this.nroTicket = nroTicket;
-		this.total = total;
 		this.formaDePago = formaDePago;
 		this.cliente = cliente;
 		this.empleadoAtencion = empleadoAtencion;
@@ -133,6 +132,14 @@ public class Venta {
 				itemVentaList.add( JsonToObjectClass.jsonToItemVenta((BasicDBObject) itemsVentaJSON.get(i)));
 			}
 		return itemVentaList;
+	}
+	public void calcularTotal() { //Calculo el total de la venta sumando todos los precios de los productos
+		double total =0;
+		for (int i=0;i<this.getItemsVenta().size();i++) {
+			total += this.getItemsVenta().get(i).getCantidad() * this.getItemsVenta().get(i).getProducto().getPrecio();
+		}
+		
+		this.setTotal(total);
 	}
 	
 	public String toString() {

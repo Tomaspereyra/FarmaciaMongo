@@ -68,10 +68,11 @@ public class Test {
 	
 	//Carga ventas
 	FormaDePago formaDePago = new FormaDePago("Efectivo");
-    Venta venta = new Venta(new Date(),"0001-12345678",500,formaDePago,clienteDao.traerCliente(22222222),atencion,caja);	   
+    Venta venta = new Venta(new Date(),"0001-12345678",formaDePago,clienteDao.traerCliente(22222222),atencion,caja);	   
 	ItemVenta item = new ItemVenta(productoDao.traerProducto("perfume"),1);
 	 
-	venta.agregarItem(item);	   
+	venta.agregarItem(item);
+	venta.calcularTotal(); //Seteo el total antes de agregarla
     
 	//ventaDao.agregarVenta(venta);
 		
@@ -94,8 +95,20 @@ public class Test {
 		System.out.println(ventaDao.traerTotal(ventaDao.traerVentas(fechaInicial, fechaFinal)));
 		//Detalle de ventas por fechas y por sucursal
 		System.out.println(ventaDao.traerVentas("0001",fechaInicial, fechaFinal));
+		
 		System.out.println(ventaDao.traerTotal(ventaDao.traerVentas(fechaInicial, fechaFinal)));
 		System.out.println("------");
+		//2-
+		// Detalle de ventas para la cadena completa por obraSocial
+		System.out.println(ventaDao.traerVentas(fechaInicial, fechaFinal, true));
+		//3-
+		// Detalle de ventas para la cadena completa por medios de pago diferentes
+		System.out.println(ventaDao.traerVentas(fechaInicial, fechaFinal, "Efectivo"));
+        //4-
+		//Detalle de ventas para la cadena completa por fecha y por tipo de producto
+		System.out.println(ventaDao.traerVentasTipo(fechaInicial, fechaFinal, "farmacia"));
+		
+		
 		System.out.println(ventaDao.traerRank());
 
 	   

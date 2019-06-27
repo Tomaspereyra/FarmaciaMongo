@@ -110,7 +110,8 @@ public class JsonToObjectClass {
 		Cliente c=	jsonToClienteConObraSocial((BasicDBObject) venta.get("cliente"));
 		Empleado e1= jsonToEmpleado((BasicDBObject) venta.get("empleadoAtencion"));
 		Empleado e2= jsonToEmpleado((BasicDBObject) venta.get("empleadoCaja"));
-		Venta v= new Venta(venta.getDate("fecha"), venta.getString("nroTicket"), venta.getDouble("total"), f, c, e1, e2);
+		Venta v= new Venta(venta.getDate("fecha"), venta.getString("nroTicket"), f, c, e1, e2);
+		v.setTotal( venta.getDouble("total"));
 		v.setItemsVenta(v.jsonToListItemVenta((BasicDBList)venta.get("itemsVenta"))); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
 		return v;
 	}
