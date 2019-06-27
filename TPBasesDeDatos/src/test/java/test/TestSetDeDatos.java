@@ -17,10 +17,10 @@ import pojos.Sucursal;
 public class TestSetDeDatos {
 
 	public static void main(String[] args) throws UnknownHostException {
-		/* A fin de poder realizar las consultas, de deber· generar un set de datos conteniendo como mÏnimo 3 sucursales, 
-		10 clientes, 3 vendedores por sucursal, uno de ellos con categorÌa  encargado; 10 productos (7 medicamentos y 3 perfumerÏa),
-		y un promedio de 30 ventas por sucursal. Es deseable que haya variaciÛn en las cantidades de venta por sucursal (+/- 20%). 
-		Las ventas deben tener un promedio mÌnimo de 1,5 productos.*/
+		/* A fin de poder realizar las consultas, de deber√° generar un set de datos conteniendo como m√¨nimo 3 sucursales, 
+		10 clientes, 3 vendedores por sucursal, uno de ellos con categor√≠a  encargado; 10 productos (7 medicamentos y 3 perfumer√¨a),
+		y un promedio de 30 ventas por sucursal. Es deseable que haya variaci√≥n en las cantidades de venta por sucursal (+/- 20%). 
+		Las ventas deben tener un promedio m√≠nimo de 1,5 productos.*/
 		
 		ClienteDao clienteDao= new ClienteDao();
 		ProductoDao productoDao = new ProductoDao();		

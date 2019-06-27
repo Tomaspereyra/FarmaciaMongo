@@ -36,11 +36,5 @@ public class Provincia {
 		DBObject provincia = new BasicDBObject("nombre",this.getNombre());
 		return provincia;
 	}
-
-	@Override
-	public String toString() {
-		return "Provincia [idProvincia=" + idProvincia + ", nombre=" + nombre + "]";
-	}
-	
 	
 }

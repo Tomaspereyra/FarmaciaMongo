@@ -86,13 +86,5 @@ public class Sucursal {
 		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("_id", this.getIdSucursal()).append("nombre", this.getNombre()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
 	    return sucursal;
 	}
-
-	@Override
-	public String toString() {
-		return "Sucursal [idSucursal=" + idSucursal + ", nombre=" + nombre + ", domicilio=" + domicilio + ", encargado="
-				+ encargado + ", empleados=" + empleados + "]";
-	}
-	
-	
 	
 }

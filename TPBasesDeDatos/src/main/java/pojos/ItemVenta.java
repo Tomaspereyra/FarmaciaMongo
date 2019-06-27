@@ -1,5 +1,7 @@
 package pojos;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;

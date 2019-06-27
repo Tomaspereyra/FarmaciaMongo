@@ -1,5 +1,6 @@
 package pojos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Venta {
 		this.cliente = cliente;
 		this.empleadoAtencion = empleadoAtencion;
 		this.empleadoCaja = empleadoCaja;
-		this.itemsVenta = new ArrayList<ItemVenta>();		
+		this.itemsVenta = new ArrayList<ItemVenta>();
 	}
 	
 	public int getIdVenta() {
@@ -106,7 +107,6 @@ public class Venta {
 	
 	public void agregarItem(ItemVenta item) {
 		this.itemsVenta.add(item);
-		this.calcularTotal();
 	}
 	
 	public DBObject objectToJson() {

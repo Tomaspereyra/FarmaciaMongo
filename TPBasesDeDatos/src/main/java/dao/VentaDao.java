@@ -1,16 +1,26 @@
 package dao;
 
 import java.net.UnknownHostException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.mongodb.AggregationOptions;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.ReadPreference;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 import com.mongodb.util.JSON;
 
 import pojos.Cliente;
@@ -88,16 +98,8 @@ public class VentaDao {
 
 	public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal) {
 		List<Venta> ventas = traerVentas(fechaInicial, fechaFinal);
-		List<Venta> ventasFiltro = new ArrayList<Venta>();
-		String id;
-		for (int i = 0; i < ventas.size(); i++) {
-			id = ventas.get(i).getNroTicket().substring(0, 4);
-			if (id.equalsIgnoreCase(idSucursal)) {
-				ventasFiltro.add(ventas.get(i));
-
-			}
-
-		}
+		List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
+		
 
 		return ventasFiltro;
 	}
@@ -129,12 +131,21 @@ public class VentaDao {
 		return ventasJSON;
 
 	}
+	// Detalle de ventas para la sucursal, por obra social o privado
+
+	public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
+		List<Venta> ventas = JsonToObjectClass.jsonToVentas(this.traerVentas(fechaInicial, fechaFinal, esObraSocial));
+		
+		List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
+		
+		return ventasFiltro;
+	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Detalle cobranza para la cadena completa por medio de pago y entre fechas
 
-	public List<DBObject> traerVentas(Date fechaInicial, Date fechaFinal, String medio) {
+	public List<Venta> traerVentas(Date fechaInicial, Date fechaFinal, String medio) {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
@@ -146,15 +157,23 @@ public class VentaDao {
 
 		List<DBObject> ventasJSON = cursor.toArray();
 
-		return ventasJSON;
+		return JsonToObjectClass.jsonToVentas(ventasJSON);
 
 	}
+// Detalle cobranza por sucursal,por medio de pago y entre fechas
+ public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal, String medio ){
+	 List<Venta> ventas = this.traerVentas(fechaInicial, fechaFinal, medio);
+	 List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
+
+	 return ventasFiltro;
+	 
+ }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Detalle de ventas de productos de la cadena entre fechas, diferenciados entre farmacia y perfumería.
 
-	public List<DBObject> traerVentasTipo(Date fechaInicial, Date fechaFinal, String tipo) {
+	public List<Venta> traerVentasTipo(Date fechaInicial, Date fechaFinal, String tipo) {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
@@ -166,24 +185,33 @@ public class VentaDao {
 
 		List<DBObject> ventasJSON = cursor.toArray();
 
-		return ventasJSON;
+		return JsonToObjectClass.jsonToVentas(ventasJSON);
 
 	}
-
+	
+// Detalle de ventas de productos de sucursal entre fechas, diferenciados entre farmacia y perfumería.
+    public List<Venta> traerVentasTipo(String idSucursal, Date fechaInicial, Date fechaFinal,String tipo){
+    	List<Venta> ventas = this.traerVentasTipo(fechaInicial, fechaFinal, tipo);
+        List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
+       
+        return ventasFiltro;
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public List<DBObject> traerRank() {
-		DBCollection ventasCollection = database.getCollection("ventas");
-		DBObject query =(DBObject) JSON.parse("{{$unwind: '$itemsVenta'},{$sortByCount:'$itemsVenta'} }");
-		// db.ventas.aggregate([{$unwind: "$itemsVenta"},{$sortByCount:"$itemsVenta"} ])
-		
+	
+	
+	private List<Venta> filtrarVentasPorSucursal(String idSucursal, List<Venta> ventas) {
+		String id;
+		List<Venta> ventasFiltro = new ArrayList<Venta>();
+		for (int i = 0; i < ventas.size(); i++) {
+			id = ventas.get(i).getNroTicket().substring(0, 4);
+			if (id.equalsIgnoreCase(idSucursal)) {
+				ventasFiltro.add(ventas.get(i));
 
-		DBCursor cursor = ventasCollection.find(query);
+			}
 
-		List<DBObject> ventasJSON = cursor.toArray();
-
-		return ventasJSON;
-
+		}
+		return ventasFiltro;
 	}
 
 }

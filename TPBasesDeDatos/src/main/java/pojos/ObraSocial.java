@@ -31,11 +31,6 @@ public class ObraSocial {
 		DBObject obraSocial = new BasicDBObject("nombre",this.getNombre());
 		return obraSocial;
 	}
-
-	@Override
-	public String toString() {
-		return "ObraSocial [idObraSocial=" + idObraSocial + ", nombre=" + nombre + "]";
-	}
 	
 	
 }
