@@ -27,7 +27,7 @@ public class Empleado extends Persona {
 
 	@Override
 	public String toString() {
-		return "Empleado [cuil=" + cuil + ", toString()=" + super.toString() + "]";
+		return super.toString() + "Empleado [cuil=" + cuil+ "]";
 	}
 
 }

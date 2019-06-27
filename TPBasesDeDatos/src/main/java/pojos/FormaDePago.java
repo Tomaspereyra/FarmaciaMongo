@@ -31,6 +31,12 @@ public class FormaDePago {
 		DBObject formaDePago = new BasicDBObject("nombre",this.getNombre());
 	    return formaDePago;
 	}
+
+	@Override
+	public String toString() {
+		return "FormaDePago [idFormaDePago=" + idFormaDePago + ", nombre=" + nombre + "]";
+	}
+	
 	
 	
 }

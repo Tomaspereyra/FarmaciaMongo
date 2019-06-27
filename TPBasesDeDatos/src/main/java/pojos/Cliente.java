@@ -36,4 +36,10 @@ public class Cliente extends Persona {
 		return cliente;
 	}
 
+	public String toString() {
+		return super.toString() + "Cliente [obraSocial=" + obraSocial + "]";
+	}
+	
+	
+
 }

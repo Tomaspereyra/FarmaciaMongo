@@ -42,5 +42,13 @@ public class PuntoDeVenta {
 		DBObject puntoDeVenta = new BasicDBObject ("sucursal", this.getSucursal().objectToJson()).append("nroPuntoDeVenta", this.getNroPuntoDeVenta());
 		return puntoDeVenta;
 	}
+
+	@Override
+	public String toString() {
+		return "PuntoDeVenta [idPuntoDeVenta=" + idPuntoDeVenta + ", sucursal=" + sucursal + ", nroPuntoDeVenta="
+				+ nroPuntoDeVenta + "]";
+	}
+	
+	
 	
 }

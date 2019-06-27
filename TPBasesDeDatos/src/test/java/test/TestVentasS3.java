@@ -36,7 +36,7 @@ public class TestVentasS3 {
 		 
 		 //VENTAS
 		 
-	     Venta venta = new Venta(new Date(),"0003-1",0,formaDePago,clienteDao.traerCliente(22222222),atencionS3,cajaS3);	   
+	     Venta venta = new Venta(new Date(),"0003-1",formaDePago,clienteDao.traerCliente(22222222),atencionS3,cajaS3);	   
 	     item = new ItemVenta(productoDao.traerProducto("Amlodipina"),1);
 		 item2= new ItemVenta(productoDao.traerProducto("Aspirina"),2);
 		 item3= new ItemVenta(productoDao.traerProducto("Ibuprofeno600"),3); 
@@ -47,14 +47,14 @@ public class TestVentasS3 {
 		 venta.agregarItem(item4);	
 		 ventaDao.agregarVenta(venta); 
 		 
-		 Venta venta2 = new Venta(new Date(),"0003-2",0,formaDePago2,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
+		 Venta venta2 = new Venta(new Date(),"0003-2",formaDePago2,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Perfume2"),4);
 		 item2=new ItemVenta(productoDao.traerProducto("Ibuprofeno"),1);
 		 venta2.agregarItem(item);	
 		 venta2.agregarItem(item2);	 
 		 ventaDao.agregarVenta(venta2); 
 		 
-		 Venta venta3 = new Venta(new Date(),"0003-3",0,formaDePago,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
+		 Venta venta3 = new Venta(new Date(),"0003-3",formaDePago,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Amoxicilina"),2);
 		 item2= new ItemVenta(productoDao.traerProducto("Aspirina"),2);
 		 item3= new ItemVenta(productoDao.traerProducto("Ibuprofeno600"),3); 
@@ -65,7 +65,7 @@ public class TestVentasS3 {
 		 venta3.agregarItem(item4);
 		 ventaDao.agregarVenta(venta3); 
 		 
-		 Venta venta4 = new Venta(new Date(),"0003-4",0,formaDePago2,clienteDao.traerCliente(22222222),atencionS3,cajaS3);	   
+		 Venta venta4 = new Venta(new Date(),"0003-4",formaDePago2,clienteDao.traerCliente(22222222),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Ibuprofeno600"),1);
 		 item2= new ItemVenta(productoDao.traerProducto("Aspirina"),2);
 		 item3= new ItemVenta(productoDao.traerProducto("Ibuprofeno"),3); 
@@ -74,7 +74,7 @@ public class TestVentasS3 {
 		 venta4.agregarItem(item3);	
 		 ventaDao.agregarVenta(venta4); 
 		 
-		 Venta venta5 = new Venta(new Date(),"0003-5",0,formaDePago,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
+		 Venta venta5 = new Venta(new Date(),"0003-5",formaDePago,clienteDao.traerCliente(33333333),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Ibuprofeno600"),1);
 		 item2= new ItemVenta(productoDao.traerProducto("Perfume"),1);
 		 item3= new ItemVenta(productoDao.traerProducto("Aspirina"),1);
@@ -83,7 +83,7 @@ public class TestVentasS3 {
 		 venta5.agregarItem(item3);	
 		 ventaDao.agregarVenta(venta5); 
 		 
-		 Venta venta6 = new Venta(new Date(),"0003-6",0,formaDePago2,clienteDao.traerCliente(44444444),atencionS3,cajaS3);	   
+		 Venta venta6 = new Venta(new Date(),"0003-6",formaDePago2,clienteDao.traerCliente(44444444),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Aspirina"),4);
 		 item2= new ItemVenta(productoDao.traerProducto("Paracetamol"),1);
 		 item3= new ItemVenta(productoDao.traerProducto("Amlodipina"),1);
@@ -92,7 +92,7 @@ public class TestVentasS3 {
 		 venta6.agregarItem(item3);	
 		 ventaDao.agregarVenta(venta6); 
 		 
-		 Venta venta7 = new Venta(new Date(),"0003-7",0,formaDePago,clienteDao.traerCliente(44444444),atencionS3,cajaS3);	   
+		 Venta venta7 = new Venta(new Date(),"0003-7",formaDePago,clienteDao.traerCliente(44444444),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Amlodipina"),2);
 		 item2= new ItemVenta(productoDao.traerProducto("Paracetamol"),7);
 		 item3= new ItemVenta(productoDao.traerProducto("Aspirina"),2);
@@ -101,7 +101,7 @@ public class TestVentasS3 {
 		 venta7.agregarItem(item3);	   
 		 ventaDao.agregarVenta(venta7); 
 		 
-		 Venta venta8 = new Venta(new Date(),"0003-8",0,formaDePago2,clienteDao.traerCliente(22456789),atencionS3,cajaS3);	   
+		 Venta venta8 = new Venta(new Date(),"0003-8",formaDePago2,clienteDao.traerCliente(22456789),atencionS3,cajaS3);	   
 		 item = new ItemVenta(productoDao.traerProducto("Amlodipina"),4);
 		 item2= new ItemVenta(productoDao.traerProducto("Paracetamol"),4);
 		 venta8.agregarItem(item);
