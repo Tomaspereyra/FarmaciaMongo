@@ -7,7 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 public class Sucursal {
-	private int idSucursal;
+	private String idSucursal;
 	private String nombre;
 	private Domicilio domicilio;
 	private Empleado encargado;
@@ -29,11 +29,11 @@ public class Sucursal {
 		this.nombre = nombre;
 	}
 
-	public int getIdSucursal() {
+	public String getIdSucursal() {
 		return idSucursal;
 	}
 	
-	public void setIdSucursal(int idSucursal) {
+	public void setIdSucursal(String idSucursal) {
 		this.idSucursal = idSucursal;
 	}
 	
@@ -83,7 +83,7 @@ public class Sucursal {
 	}
 	
 	public DBObject objectToJson() {
-		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("nombre", this.getNombre()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
+		DBObject sucursal = new BasicDBObject("domicilio",this.getDomicilio().objectToJson()).append("_id", this.getIdSucursal()).append("nombre", this.getNombre()).append("encargado",this.getEncargado().objectToJson()).append("empleados",this.listToJson());
 	    return sucursal;
 	}
 	

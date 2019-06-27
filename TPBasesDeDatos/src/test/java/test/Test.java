@@ -14,6 +14,8 @@ import pojos.Venta;
 
 import java.math.BigDecimal;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -31,7 +33,7 @@ import dao.SucursalDao;
 import dao.VentaDao;
 public class Test {
 
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, ParseException {
 		// TODO Auto-generated method stub
 		Provincia provincia = new Provincia("Buenos Aires");
 		Localidad localidad = new Localidad("Temperley");
@@ -40,18 +42,20 @@ public class Test {
 		ClienteDao clienteDao= new ClienteDao();
 		ProductoDao productoDao = new ProductoDao();
 		Laboratorio laboratorio = new Laboratorio("bayer");
+		VentaDao ventaDao = new VentaDao(); 
+		Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
+		 Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
    
     
-	 /* Carga Sucursal
+	 
 	 Empleado encargado = new Empleado("apellido","nombre", 12345678,domicilio,"20-999999-7");
-	 Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
-	 Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
      Sucursal sucursal = new Sucursal(domicilio,encargado,"Sucursal A");
+     sucursal.setIdSucursal("0001");
      sucursal.agregarEmpleados(caja);
      sucursal.agregarEmpleados(atencion);
      SucursalDao sucursalDao = new SucursalDao();
-     sucursalDao.agregarSucursal(sucursal);
-     */
+     //sucursalDao.agregarSucursal(sucursal);
+    
 	
 	  // Carga Clientes
 	 /*clienteDao.agregarCliente("Otegui", "Luciano",22222222,domicilio,obraSocial);
@@ -63,16 +67,36 @@ public class Test {
 	productoDao.agregarProducto("perfume","Perfumeria","descripcion de un Perfume", laboratorio, 1234, 500);*/
 	
 	//Carga ventas
-	Empleado atencion = new Empleado("atencion","A", 11111111,domicilio,"20-999999-8");
-	Empleado caja = new Empleado("caja","A", 12345678,domicilio,"20-999999-8");
 	FormaDePago formaDePago = new FormaDePago("Efectivo");
     Venta venta = new Venta(new Date(),"0001-12345678",500,formaDePago,clienteDao.traerCliente(22222222),atencion,caja);	   
 	ItemVenta item = new ItemVenta(productoDao.traerProducto("perfume"),1);
-	
-	VentaDao ventaDao = new VentaDao();   
+	 
 	venta.agregarItem(item);	   
     
-	ventaDao.agregarVenta(venta);
+	//ventaDao.agregarVenta(venta);
+		
+		Date fechaInicial = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha = "2018-10-1";
+		fechaInicial = ft.parse(fecha);
+		Date fechaFinal = new Date();
+		
+		String fecha1 = "2018-12-12";
+		fechaFinal = ft.parse(fecha1);
+		
+		System.out.println(fechaInicial);
+		System.out.println(fechaFinal);
+		venta.setFecha(fechaInicial);
+		//ventaDao.agregarVenta(venta);
+	
+		//Detalle de ventas por fechas (Toda la cadena)
+		System.out.println(ventaDao.traerVentas(fechaInicial, fechaFinal));
+		System.out.println(ventaDao.traerTotal(ventaDao.traerVentas(fechaInicial, fechaFinal)));
+		//Detalle de ventas por fechas y por sucursal
+		System.out.println(ventaDao.traerVentas("0001",fechaInicial, fechaFinal));
+		System.out.println(ventaDao.traerTotal(ventaDao.traerVentas(fechaInicial, fechaFinal)));
+		System.out.println("------");
+		System.out.println(ventaDao.traerRank());
 
 	   
 

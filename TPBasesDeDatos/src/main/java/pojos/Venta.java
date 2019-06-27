@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -125,13 +126,20 @@ public class Venta {
 		return itemsVentaJSON;
 	}
 	
-	public List<ItemVenta> jsonToListItemVenta() {
+	public List<ItemVenta> jsonToListItemVenta(BasicDBList itemsVentaJSON) {
 		List<ItemVenta> itemVentaList = new ArrayList<ItemVenta>();
-		List<DBObject> itemsVentaJSON = new ArrayList<DBObject>();	
+		
 			for(int i=0;i<itemsVentaJSON.size();i++) {
 				itemVentaList.add( JsonToObjectClass.jsonToItemVenta((BasicDBObject) itemsVentaJSON.get(i)));
 			}
 		return itemVentaList;
 	}
+	
+	public String toString() {
+		return "Venta [idVenta=" + idVenta + ", fecha=" + fecha + ", nroTicket=" + nroTicket + ", total=" + total
+				+ ", formaDePago=" + formaDePago + ", cliente=" + cliente + ", empleadoAtencion=" + empleadoAtencion
+				+ ", empleadoCaja=" + empleadoCaja + ", itemsVenta=" + itemsVenta + "]";
+	}
+	
 	
 }

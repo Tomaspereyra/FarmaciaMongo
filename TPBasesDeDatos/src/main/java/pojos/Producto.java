@@ -73,9 +73,16 @@ public class Producto {
 	}
 	
 	public DBObject objectToJson() {
-	DBObject producto = new BasicDBObject ("descripcion", this.getDescripcion()).append("nombre", this.getNombre()).append("laboratorio",this.getLaboratorio().objectToJson()).append("codigo", this.getCodigo()).append("precio",this.getPrecio()).append("tipo", this.getTipo());	
+	DBObject producto = new BasicDBObject ("descripcion", this.getDescripcion()).append("nombre", this.getNombre()).append("laboratorio",this.getLaboratorio().objectToJson()).append("codigo", this.getCodigo()).append("tipo",this.getTipo()).append("precio",this.getPrecio());	
 	return producto;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", tipo=" + tipo + ", descripcion="
+				+ descripcion + ", laboratorio=" + laboratorio + ", codigo=" + codigo + ", precio=" + precio + "]";
+	}
+	
 	
 	
 	

@@ -1,8 +1,12 @@
 package pojos;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 public class JsonToObjectClass {
 
@@ -107,8 +111,19 @@ public class JsonToObjectClass {
 		Empleado e1= jsonToEmpleado((BasicDBObject) venta.get("empleadoAtencion"));
 		Empleado e2= jsonToEmpleado((BasicDBObject) venta.get("empleadoCaja"));
 		Venta v= new Venta(venta.getDate("fecha"), venta.getString("nroTicket"), venta.getDouble("total"), f, c, e1, e2);
-		v.setItemsVenta(v.jsonToListItemVenta()); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
+		v.setItemsVenta(v.jsonToListItemVenta((BasicDBList)venta.get("itemsVenta"))); //FALTA PROBAR SI FUNCIONA LO DE LA LISTA
 		return v;
+	}
+	
+	public static List<Venta> jsonToVentas(List<DBObject> ventas ){
+		List<Venta> ventasObj = new ArrayList<Venta>();
+		for(int i=0;i<ventas.size();i++) {
+			ventasObj.add(JsonToObjectClass.jsonToVenta((BasicDBObject)ventas.get(i)));
+			
+		}
+		return ventasObj;
+		
+		
 	}
 	
 }

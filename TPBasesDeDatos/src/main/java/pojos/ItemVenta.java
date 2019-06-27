@@ -41,5 +41,11 @@ public class ItemVenta {
 		DBObject itemVenta = new BasicDBObject ("producto",this.getProducto().objectToJson()).append("cantidad", this.getCantidad());
 		return itemVenta;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemVenta [producto=" + producto + ", cantidad=" + cantidad + "]";
+	}
+	
 	
 }

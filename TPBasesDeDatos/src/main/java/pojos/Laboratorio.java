@@ -35,5 +35,11 @@ public class Laboratorio {
 		DBObject laboratorio = new BasicDBObject("nombre",this.getNombre());
 		return laboratorio;
 	}
+
+	@Override
+	public String toString() {
+		return "Laboratorio [idLaboratorio=" + idLaboratorio + ", nombre=" + nombre + "]";
+	}
+	
 	
 }
