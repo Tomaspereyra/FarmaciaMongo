@@ -12,11 +12,11 @@ public class Test {
 	public static void main(String[] args) throws UnknownHostException, ParseException {	
 		Date fechaInicial = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-		String fecha = "2018-10-1";
+		String fecha = "2019-6-1";
 		fechaInicial = ft.parse(fecha);
 		Date fechaFinal = new Date();
 		
-		String fecha1 = "2018-12-12";
+		String fecha1 = "2019-4-1";
 		fechaFinal = ft.parse(fecha1);
 		
 		System.out.println(fechaInicial);

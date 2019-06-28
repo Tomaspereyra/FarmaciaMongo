@@ -1,6 +1,7 @@
 package test;
 
 import java.net.UnknownHostException;
+import java.text.ParseException;
 
 import dao.ClienteDao;
 import dao.ProductoDao;
@@ -16,7 +17,7 @@ import pojos.Sucursal;
 
 public class TestSetDeDatos {
 
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, ParseException {
 		/* A fin de poder realizar las consultas, de deberá generar un set de datos conteniendo como mìnimo 3 sucursales, 
 		10 clientes, 3 vendedores por sucursal, uno de ellos con categoría  encargado; 10 productos (7 medicamentos y 3 perfumerìa),
 		y un promedio de 30 ventas por sucursal. Es deseable que haya variación en las cantidades de venta por sucursal (+/- 20%). 
