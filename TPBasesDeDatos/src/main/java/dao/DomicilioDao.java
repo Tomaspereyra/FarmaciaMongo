@@ -20,7 +20,7 @@ public class DomicilioDao {
 
 	public DomicilioDao() throws UnknownHostException {
 		this.mongoClient = new MongoClient();
-		this.database = mongoClient.getDB("mongoClient");
+		this.database = mongoClient.getDB("farmacia");
 	}
 
 	public void agregarDomicilio(String calle, int numero, Localidad localidad, Provincia provincia) {
