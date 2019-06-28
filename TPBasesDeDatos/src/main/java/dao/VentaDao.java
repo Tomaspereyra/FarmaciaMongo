@@ -76,7 +76,7 @@ public class VentaDao {
 		double total = 0;
 
 		for (int i = 0; i < ventas.size(); i++) {
-			total = +ventas.get(i).getTotal();
+			total += ventas.get(i).getTotal();
 		}
 
 		return total;
