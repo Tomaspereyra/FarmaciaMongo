@@ -143,9 +143,9 @@ public class Venta {
 	}
 	
 	public String toString() {
-		return "Venta [idVenta=" + idVenta + ", fecha=" + fecha + ", nroTicket=" + nroTicket + ", total=" + total
+		return "Venta [fecha=" + fecha + ", nroTicket=" + nroTicket + ", total=" + total
 				+ ", formaDePago=" + formaDePago + ", cliente=" + cliente + ", empleadoAtencion=" + empleadoAtencion
-				+ ", empleadoCaja=" + empleadoCaja + ", itemsVenta=" + itemsVenta + "]";
+				+ ", empleadoCaja=" + empleadoCaja + ", itemsVenta=" + itemsVenta + "]\n";
 	}
 	
 	
