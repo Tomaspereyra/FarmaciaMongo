@@ -7,20 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dao.VentaDao;
-public class Test {
+public class TestConsultas {
 
 	public static void main(String[] args) throws UnknownHostException, ParseException {	
 		Date fechaInicial = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
-		String fecha = "2018-11-11 00-00-00";
-		fechaInicial = ft.parse(fecha);
 		Date fechaFinal = new Date();
-		
-		String fecha1 = "2019-06-27 23-59-59";
-		fechaFinal = ft.parse(fecha1);
-		
-		System.out.println(fechaInicial);
-		System.out.println(fechaFinal);
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+		String fechaI = "2019-4-1";
+		String fechaF = "2019-6-1";
+		fechaInicial = ft.parse(fechaI);	
+		fechaFinal = ft.parse(fechaF);		
 		VentaDao ventaDao= new VentaDao();
 	
 		//Detalle de ventas por fechas (Toda la cadena)
@@ -54,11 +50,16 @@ public class Test {
 		
         //5
         //Detalle de ventas por productos para toda la cadena
+    	Date fechaInicialRanking = new Date();
+    	Date fechaFinalRanking = new Date();
+		SimpleDateFormat ftr = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+		String fechaInicialR = "2018-11-11 00-00-00";
+		String fechaFinalR = "2019-06-27 23-59-59";
+		fechaInicialRanking = ftr.parse(fechaInicialR);
+		fechaFinalRanking = ftr.parse(fechaFinalR);
+             
         System.out.println("\n\n5-Detalle de ventas por productos para toda la cadena\n");
-        System.out.println(fechaInicial);
-        System.out.println(fechaFinal);
-
-        ventaDao.rankingProductos(fechaInicial, fechaFinal);
+        ventaDao.rankingProductos(fechaInicialRanking, fechaFinalRanking);
 	   
 
 	 
