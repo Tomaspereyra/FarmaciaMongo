@@ -320,7 +320,6 @@ public class VentaDao {
 			             Aggregates.sort(Sorts.descending("totalCantidad"))
 			      )
 			).forEach(printBlock);	
-		collection.drop();
 	}
 	
 	
@@ -370,6 +369,5 @@ public class VentaDao {
 			             Aggregates.sort(Sorts.descending("montoTotalDeTodasLasCompras"))
 			      )
 			).forEach(printBlock);	
-		collection.drop();
 	}
 }
