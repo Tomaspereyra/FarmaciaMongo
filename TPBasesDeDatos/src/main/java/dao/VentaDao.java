@@ -21,11 +21,13 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ReadPreference;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.util.JSON;
 
 import pojos.Cliente;
@@ -219,25 +221,48 @@ public class VentaDao {
 		return ventasFiltro;
 	}
 	
-	public void rankingProductos() {
+	public void rankingProductos(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
 		        public void apply(final Document document) {
 		            System.out.println(document.toJson());
 		        }
 		    };
+		    
 		MongoDatabase db = mongoClient.getDatabase("farmacia");
 		MongoCollection<Document> collection = db.getCollection("ventas");
+		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));
+		//DBCollection ventasCollection = database.getCollection("ventas");
+		//DBObject query = new BasicDBObject();
+
+		//query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+		//query.put("fecha", new BasicDBObject("$lte", fechaFinal));
+		
+		
+	
+		
 		collection.aggregate(
 			      Arrays.asList(
 			              //Aggregates.match(Filters.eq("categories", "Bakery")),
 			              //Aggregates.group("$itemsVenta.producto.nombre", Accumulators.sum("count", 1)),
-			           
-			              Aggregates.unwind("$itemsVenta"),
-			              Aggregates.sortByCount("$itemsVenta")
-			              
+			            // Aggregates.match(Filters.and(Filters.gte("fecha", fechaInicial),Filters.lte("fecha", fechaFinal))),
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$itemsVenta"),
+			             Aggregates.group("$itemsVenta.producto",Accumulators.sum("totalCantidad", "$itemsVenta.cantidad"),Accumulators.sum("totalPrecio",multiply )),
+			             Aggregates.sort(Sorts.descending("totalPrecio"))
 			      )
 			).forEach(printBlock);
+		
+	}
+	
+	public void rankingProductosPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
+		List <Venta> ventas = this.traerVentas(idSucursal, fechaInicial, fechaFinal);
+		
+		
+		
+		
+		
 		
 	}
 	

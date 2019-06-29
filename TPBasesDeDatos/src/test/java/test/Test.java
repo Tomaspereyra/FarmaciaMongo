@@ -11,12 +11,12 @@ public class Test {
 
 	public static void main(String[] args) throws UnknownHostException, ParseException {	
 		Date fechaInicial = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-		String fecha = "2019-4-1";
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+		String fecha = "2018-11-11 00-00-00";
 		fechaInicial = ft.parse(fecha);
 		Date fechaFinal = new Date();
 		
-		String fecha1 = "2019-6-1";
+		String fecha1 = "2019-06-27 23-59-59";
 		fechaFinal = ft.parse(fecha1);
 		
 		System.out.println(fechaInicial);
@@ -55,7 +55,10 @@ public class Test {
         //5
         //Detalle de ventas por productos para toda la cadena
         System.out.println("\n\n5-Detalle de ventas por productos para toda la cadena\n");
-        ventaDao.rankingProductos();
+        System.out.println(fechaInicial);
+        System.out.println(fechaFinal);
+
+        ventaDao.rankingProductos(fechaInicial, fechaFinal);
 	   
 
 	 
