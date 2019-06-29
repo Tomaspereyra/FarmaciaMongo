@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.BSONObject;
 import org.bson.Document;
 
 import com.mongodb.AggregationOptions;
@@ -220,7 +221,9 @@ public class VentaDao {
 		}
 		return ventasFiltro;
 	}
-	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Detalle de ventas por productos para toda la cadena entre fechas por monto   
 	public void rankingProductosPorMonto(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
@@ -241,17 +244,42 @@ public class VentaDao {
 			      )
 			).forEach(printBlock);		
 	}
-	
-	public void rankingProductosPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
-		List <Venta> ventas = this.traerVentas(idSucursal, fechaInicial, fechaFinal);
+
+	 //Detalle de ventas por productos por sucursal entre fechas por monto
+	public void rankingProductosPorMontoPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
+		List <Venta> ventas = this.traerVentas(idSucursal, fechaInicial, fechaFinal);	
+		List<Document> ventasDB= JsonToObjectClass.VentasToJson(ventas);
 		
+		Block<Document> printBlock = new Block<Document>() {
+	        @Override
+	        public void apply(final Document document) {
+	            System.out.println(document.toJson());
+	        }
+	    };	    
 		
+	    MongoDatabase db = mongoClient.getDatabase("farmacia");
+	    db.createCollection("ranking");
+		MongoCollection<Document> collection= db.getCollection("ranking");
 		
+		for (int i = 0; i < ventasDB.size(); i++) {
+			collection.insertOne(ventasDB.get(i));
+		}
 		
-		
-		
+		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));	
+		collection.aggregate(
+			      Arrays.asList(
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$itemsVenta"),
+			             Aggregates.group("$itemsVenta.producto",Accumulators.sum("totalCantidad", "$itemsVenta.cantidad"),Accumulators.sum("totalPrecio",multiply )),
+			             Aggregates.sort(Sorts.descending("totalPrecio"))
+			      )
+			).forEach(printBlock);		
+		collection.drop();
 	}
 	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 //Detalle de ventas por productos para toda la cadena  entre fechas por cantidad
 	public void rankingProductosPorCantidadVendida(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
@@ -273,7 +301,42 @@ public class VentaDao {
 			).forEach(printBlock);		
 	}
 	
-
+	 //Detalle de ventas por productos por sucursal  entre fechas por cantidad
+	public void rankingProductosPorCantidadVendidaPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
+		List <Venta> ventas = this.traerVentas(idSucursal, fechaInicial, fechaFinal);	
+		List<Document> ventasDB= JsonToObjectClass.VentasToJson(ventas);
+		
+		Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };	  
+		    
+	    MongoDatabase db = mongoClient.getDatabase("farmacia");
+	    db.createCollection("ranking");
+		MongoCollection<Document> collection= db.getCollection("ranking");
+		
+		for (int i = 0; i < ventasDB.size(); i++) {
+			collection.insertOne(ventasDB.get(i));
+		}
+		
+		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));		
+		collection.aggregate(
+			      Arrays.asList(
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$itemsVenta"),
+			             Aggregates.group("$itemsVenta.producto",Accumulators.sum("totalCantidad", "$itemsVenta.cantidad"),Accumulators.sum("totalPrecio",multiply )),
+			             Aggregates.sort(Sorts.descending("totalCantidad"))
+			      )
+			).forEach(printBlock);	
+		collection.drop();
+	}
+	
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 //Detalle de ventas de clientes para toda la cadena  entre fechas por monto
 	public void rankingClientesPorMonto(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
@@ -292,5 +355,37 @@ public class VentaDao {
 			             Aggregates.sort(Sorts.descending("montoTotalDeTodasLasCompras"))
 			      )
 			).forEach(printBlock);		
+	}
+	
+	 //Detalle de ventas de clientes por sucursal  entre fechas por monto	
+	public void rankingClientesPorMontoPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
+		List <Venta> ventas = this.traerVentas(idSucursal, fechaInicial, fechaFinal);	
+		List<Document> ventasDB= JsonToObjectClass.VentasToJson(ventas);
+		
+		Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };	
+		    
+	    MongoDatabase db = mongoClient.getDatabase("farmacia");
+	    db.createCollection("ranking");
+		MongoCollection<Document> collection= db.getCollection("ranking");
+		
+		for (int i = 0; i < ventasDB.size(); i++) {
+			collection.insertOne(ventasDB.get(i));
+		}
+		
+		collection.aggregate(
+			      Arrays.asList(			         
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$cliente"),
+			             Aggregates.group("$cliente",Accumulators.sum("montoTotalDeTodasLasCompras","$total" ),Accumulators.sum("cantidadDeCompras",1)),	
+			             Aggregates.sort(Sorts.descending("montoTotalDeTodasLasCompras"))
+			      )
+			).forEach(printBlock);	
+		collection.drop();
 	}
 }

@@ -3,6 +3,8 @@ package pojos;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -125,5 +127,17 @@ public class JsonToObjectClass {
 		
 		
 	}
+	
+	public static List<Document> VentasToJson(List<Venta> ventas ){
+		List<Document> ventasDocument = new ArrayList<Document>();
+		for(int i=0;i<ventas.size();i++) {
+			ventasDocument.add(ventas.get(i).objectToJsonDocument());
+			
+		}
+		return ventasDocument;
+		
+		
+	}
+	
 	
 }

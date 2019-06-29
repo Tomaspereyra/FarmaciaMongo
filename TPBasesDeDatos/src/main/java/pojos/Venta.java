@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
+
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -116,6 +118,15 @@ public class Venta {
 		return venta;
 		
 	}
+	
+	public Document objectToJsonDocument() {
+		Document venta = new Document("fecha",this.getFecha()).append("nroTicket",this.getNroTicket()).append("total",this.getTotal()).append(
+				"formaDePago",this.getFormaDePago().objectToJson()).append("cliente",this.getCliente().objectToJson()).append("empleadoAtencion",this.getEmpleadoAtencion().objectToJson()).append(
+						"empleadoCaja",this.getEmpleadoCaja().objectToJson()).append("itemsVenta",this.listToJson());
+		return venta;
+		
+	}
+	
 	
 	public List<DBObject> listToJson() {
 		List<DBObject> itemsVentaJSON = new ArrayList<DBObject>();

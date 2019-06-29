@@ -64,7 +64,7 @@ public class TestConsultas {
         ventaDao.rankingProductosPorMonto(fechaInicialRanking, fechaFinalRanking);
         //Detalle de ventas por productos por sucursal entre fechas por monto
         System.out.println("\n\nDetalle de ventas por productos por sucursal entre fechas por monto\n");
-	   
+	    ventaDao.rankingProductosPorMontoPorSucursal("0003", fechaInicialRanking, fechaFinalRanking);
         
         //6
         //Detalle de ventas por productos para toda la cadena  entre fechas por cantidad
@@ -72,7 +72,7 @@ public class TestConsultas {
         ventaDao.rankingProductosPorCantidadVendida(fechaInicialRanking, fechaFinalRanking);
         //Detalle de ventas por productos por sucursal  entre fechas por cantidad
         System.out.println("\n\nDetalle de ventas por productos por sucursal  entre fechas por cantidad\n");
-
+        ventaDao.rankingProductosPorCantidadVendidaPorSucursal("0003", fechaInicialRanking, fechaFinalRanking);
         
         //7
         //Detalle de ventas de clientes para toda la cadena  entre fechas por monto
@@ -80,7 +80,7 @@ public class TestConsultas {
         ventaDao.rankingClientesPorMonto(fechaInicialRanking, fechaFinalRanking);
         //Detalle de ventas de clientes por sucursal  entre fechas por monto
         System.out.println("\n\nDetalle de ventas de clientes por sucursal  entre fechas por monto\n");     
-    
+        ventaDao.rankingClientesPorMontoPorSucursal("0003", fechaInicialRanking, fechaFinalRanking);
      
      
      
