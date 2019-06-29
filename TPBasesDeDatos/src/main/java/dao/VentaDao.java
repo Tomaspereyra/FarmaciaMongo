@@ -324,7 +324,7 @@ public class VentaDao {
 	
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	 //Detalle de ventas de clientes para toda la cadena  entre fechas por monto
+	 //Detalle de compras de clientes para toda la cadena  entre fechas por monto
 	public void rankingClientesPorMonto(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
@@ -345,7 +345,7 @@ public class VentaDao {
 			).forEach(printBlock);		
 	}
 	
-	 //Detalle de ventas de clientes por sucursal  entre fechas por monto	
+	 //Detalle de compras de clientes por sucursal  entre fechas por monto	
 	public void rankingClientesPorMontoPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
 		
 		Block<Document> printBlock = new Block<Document>() {
@@ -370,4 +370,53 @@ public class VentaDao {
 			      )
 			).forEach(printBlock);	
 	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Detalle de compras de clientes para toda la cadena  entre fechas por cantidad vendida
+	
+	public void rankingClientesPorCantidadVendida(Date fechaInicial, Date fechaFinal) {
+		 Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };		    
+		MongoDatabase db = mongoClient.getDatabase("farmacia");
+		MongoCollection<Document> collection = db.getCollection("ventas");	
+		collection.aggregate(
+			      Arrays.asList(			         
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$cliente"),
+			             Aggregates.group("$cliente",Accumulators.sum("montoTotalDeTodasLasCompras","$total" ),Accumulators.sum("cantidadDeCompras",1)),	
+			             Aggregates.sort(Sorts.descending("cantidadDeCompras"))
+			      )
+			).forEach(printBlock);		
+	}
+	 //Detalle de compras de clientes por sucursal  entre fechas por cantidad vendida
+		public void rankingClientesPorCantidadVendidaPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
+			
+			Block<Document> printBlock = new Block<Document>() {
+			        @Override
+			        public void apply(final Document document) {
+			            System.out.println(document.toJson());
+			        }
+			    };	
+			    
+		    MongoDatabase db = mongoClient.getDatabase("farmacia");
+			MongoCollection<Document> collection= db.getCollection("ventas");
+
+			
+			collection.aggregate(
+				      Arrays.asList(	
+	    			    	 Aggregates.match(Filters.regex("nroTicket", "^(?)"+Pattern.quote(idSucursal))),
+				             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+				             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+				             Aggregates.unwind("$cliente"),
+				             Aggregates.group("$cliente",Accumulators.sum("montoTotalDeTodasLasCompras","$total" ),Accumulators.sum("cantidadDeCompras",1)),	
+				             Aggregates.sort(Sorts.descending("cantidadDeCompras"))
+				      )
+				).forEach(printBlock);	
+		}
+	
 }
