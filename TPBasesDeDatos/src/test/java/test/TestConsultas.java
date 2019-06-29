@@ -48,24 +48,39 @@ public class TestConsultas {
 		//Detalle de ventas para la cadena completa por fecha y por tipo de producto
         System.out.println(ventaDao.traerVentasTipo("0001", fechaInicial, fechaFinal, "Farmacia"));
 		
-        //5
-        //Detalle de ventas por productos para toda la cadena
-    	Date fechaInicialRanking = new Date();
+        
+        ////////////////////////////////////INSTANCIAS DE FECHAS PARA RANKINGS////////////////////////////////////////
+        Date fechaInicialRanking = new Date();
     	Date fechaFinalRanking = new Date();
 		SimpleDateFormat ftr = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
 		String fechaInicialR = "2018-11-11 00-00-00";
 		String fechaFinalR = "2019-06-27 23-59-59";
 		fechaInicialRanking = ftr.parse(fechaInicialR);
-		fechaFinalRanking = ftr.parse(fechaFinalR);
-             
-        System.out.println("\n\n5-Detalle de ventas por productos para toda la cadena\n");
-        ventaDao.rankingProductos(fechaInicialRanking, fechaFinalRanking);
+		fechaFinalRanking = ftr.parse(fechaFinalR);  
+       
+		//5
+        //Detalle de ventas por productos para toda la cadena entre fechas por monto            
+        System.out.println("\n\n5-Detalle de ventas por productos para toda la cadena entre fechas por monto\n");
+        ventaDao.rankingProductosPorMonto(fechaInicialRanking, fechaFinalRanking);
+        //Detalle de ventas por productos por sucursal entre fechas por monto
+        System.out.println("\n\nDetalle de ventas por productos por sucursal entre fechas por monto\n");
 	   
+        
+        //6
+        //Detalle de ventas por productos para toda la cadena  entre fechas por cantidad
+        System.out.println("\n\n6-Detalle de ventas por productos para toda la cadena  entre fechas por cantidad\n");
+        ventaDao.rankingProductosPorCantidadVendida(fechaInicialRanking, fechaFinalRanking);
+        //Detalle de ventas por productos por sucursal  entre fechas por cantidad
+        System.out.println("\n\nDetalle de ventas por productos por sucursal  entre fechas por cantidad\n");
 
-	 
-
-	
-	 
+        
+        //7
+        //Detalle de ventas de clientes para toda la cadena  entre fechas por monto
+        System.out.println("\n\n7-Detalle de ventas de clientes para toda la cadena  entre fechas por monto\n");
+        ventaDao.rankingClientesPorMonto(fechaInicialRanking, fechaFinalRanking);
+        //Detalle de ventas de clientes por sucursal  entre fechas por monto
+        System.out.println("\n\nDetalle de ventas de clientes por sucursal  entre fechas por monto\n");     
+    
      
      
      

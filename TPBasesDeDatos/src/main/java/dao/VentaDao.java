@@ -221,39 +221,25 @@ public class VentaDao {
 		return ventasFiltro;
 	}
 	
-	public void rankingProductos(Date fechaInicial, Date fechaFinal) {
+	public void rankingProductosPorMonto(Date fechaInicial, Date fechaFinal) {
 		 Block<Document> printBlock = new Block<Document>() {
 		        @Override
 		        public void apply(final Document document) {
 		            System.out.println(document.toJson());
 		        }
-		    };
-		    
+		    };	    
 		MongoDatabase db = mongoClient.getDatabase("farmacia");
 		MongoCollection<Document> collection = db.getCollection("ventas");
-		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));
-		//DBCollection ventasCollection = database.getCollection("ventas");
-		//DBObject query = new BasicDBObject();
-
-		//query.put("fecha", new BasicDBObject("$gte", fechaInicial));
-		//query.put("fecha", new BasicDBObject("$lte", fechaFinal));
-		
-		
-	
-		
+		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));	
 		collection.aggregate(
 			      Arrays.asList(
-			              //Aggregates.match(Filters.eq("categories", "Bakery")),
-			              //Aggregates.group("$itemsVenta.producto.nombre", Accumulators.sum("count", 1)),
-			            // Aggregates.match(Filters.and(Filters.gte("fecha", fechaInicial),Filters.lte("fecha", fechaFinal))),
 			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
 			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
 			             Aggregates.unwind("$itemsVenta"),
 			             Aggregates.group("$itemsVenta.producto",Accumulators.sum("totalCantidad", "$itemsVenta.cantidad"),Accumulators.sum("totalPrecio",multiply )),
 			             Aggregates.sort(Sorts.descending("totalPrecio"))
 			      )
-			).forEach(printBlock);
-		
+			).forEach(printBlock);		
 	}
 	
 	public void rankingProductosPorSucursal(String idSucursal,Date fechaInicial, Date fechaFinal) {
@@ -266,5 +252,45 @@ public class VentaDao {
 		
 	}
 	
+	public void rankingProductosPorCantidadVendida(Date fechaInicial, Date fechaFinal) {
+		 Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };	    
+		MongoDatabase db = mongoClient.getDatabase("farmacia");
+		MongoCollection<Document> collection = db.getCollection("ventas");
+		Document multiply = new Document("$multiply", Arrays.asList("$itemsVenta.producto.precio", "$itemsVenta.cantidad"));		
+		collection.aggregate(
+			      Arrays.asList(
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$itemsVenta"),
+			             Aggregates.group("$itemsVenta.producto",Accumulators.sum("totalCantidad", "$itemsVenta.cantidad"),Accumulators.sum("totalPrecio",multiply )),
+			             Aggregates.sort(Sorts.descending("totalCantidad"))
+			      )
+			).forEach(printBlock);		
+	}
+	
 
+	public void rankingClientesPorMonto(Date fechaInicial, Date fechaFinal) {
+		 Block<Document> printBlock = new Block<Document>() {
+		        @Override
+		        public void apply(final Document document) {
+		            System.out.println(document.toJson());
+		        }
+		    };		    
+		MongoDatabase db = mongoClient.getDatabase("farmacia");
+		MongoCollection<Document> collection = db.getCollection("ventas");	
+		collection.aggregate(
+			      Arrays.asList(			         
+			             Aggregates.match(Filters.gte("fecha", fechaInicial)),
+			             Aggregates.match(Filters.lte("fecha", fechaFinal)),
+			             Aggregates.unwind("$cliente"),
+			             Aggregates.group("$cliente",Accumulators.sum("montoTotalDeTodasLasCompras","$total" ),Accumulators.sum("cantidadDeCompras",1)),	
+			             Aggregates.sort(Sorts.descending("montoTotalDeTodasLasCompras"))
+			      )
+			).forEach(printBlock);		
+	}
 }
