@@ -47,7 +47,7 @@ public class TestVentasS2 {
 		 item2 = new ItemVenta(productoDao.traerProducto("Perfume2"),2);
 		 venta.agregarItem(item);	   
 		 venta.agregarItem(item2);
-		 ventaDao.agregarVenta(venta); 
+		 ventaDao.agregarVenta(venta);
 		 
 		 Venta venta2 = new Venta(fecha,"0002-2",formaDePago2,clienteDao.traerCliente(33333333),atencionS2,cajaS2);	   
 		 item = new ItemVenta(productoDao.traerProducto("Perfume2"),2);
