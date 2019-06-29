@@ -126,7 +126,7 @@ public class VentaDao {
 		if (!esObraSocial) {
 			query.put("fecha", new BasicDBObject("$gte", fechaInicial));
 			query.put("fecha", new BasicDBObject("$lte", fechaFinal));
-			query.put("cliente.obraSocial.nombre", new BasicDBObject("$eq", null));
+			query.put("cliente.obraSocial.nombre", new BasicDBObject("$eq", obraSocial));
 		}
 
 		DBCursor cursor = ventasCollection.find(query);

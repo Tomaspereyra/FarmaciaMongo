@@ -37,7 +37,7 @@ public class Test {
 		System.out.println("\n\n2-Detalle de ventas para la cadena completa,entre fechas y por obra Social\n");
 		System.out.println(ventaDao.traerVentas(fechaInicial, fechaFinal, true, "SwissMedical"));
 		// Detalle de ventas por sucursal,entre fechas y por obra social
-		System.out.println(ventaDao.traerVentas("0003",fechaInicial, fechaFinal, false,""));
+		System.out.println(ventaDao.traerVentas("0001",fechaInicial, fechaFinal, false,"PRIVADO"));
 		//3-
 		// Detalle de ventas para la cadena completa por medios de pago diferentes
 		System.out.println("\n\n3-Detalle de ventas para la cadena completa por medios de pago diferentes\n");
@@ -48,7 +48,7 @@ public class Test {
 		//4-
 		//Detalle de ventas para la cadena completa por fecha y por tipo de producto
         System.out.println("\n\n4-Detalle de ventas para la cadena completa por fecha y por tipo de producto\n");
-		System.out.println(ventaDao.traerVentasTipo(fechaInicial, fechaFinal, "Farmacia"));
+		System.out.println(ventaDao.traerVentasTipo(fechaInicial, fechaFinal, "Perfumeria"));
 		//Detalle de ventas para la cadena completa por fecha y por tipo de producto
         System.out.println(ventaDao.traerVentasTipo("0001", fechaInicial, fechaFinal, "Farmacia"));
 		

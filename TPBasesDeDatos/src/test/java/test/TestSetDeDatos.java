@@ -52,7 +52,7 @@ public class TestSetDeDatos {
 		 clienteDao.agregarCliente("Leotta", "Ezequiel",12344455,domicilio,obraSocial);
 		 clienteDao.agregarCliente("Henriquez", "Lautaro",40894068,domicilio2,obraSocial2);
 		 clienteDao.agregarCliente("Pereyra", "Mauro",40867986,domicilio,obraSocial);
-		 clienteDao.agregarCliente("Orsi", "Damian",38678945,domicilio2,obraSocial2);
+		 clienteDao.agregarCliente("Orsi", "Damian",38678945,domicilio2,new ObraSocial("PRIVADO"));
 
 		//SUCURSALES//
 		
