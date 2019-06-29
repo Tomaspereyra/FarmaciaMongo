@@ -88,8 +88,8 @@ public class VentaDao {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
-		query.put("fecha", new BasicDBObject("$gt", fechaInicial));
-		query.put("fecha", new BasicDBObject("$lt", fechaFinal));
+		query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+		query.put("fecha", new BasicDBObject("$lte", fechaFinal));
 		DBCursor cursor = ventasCollection.find(query);
 
 		List<DBObject> ventasJSON = cursor.toArray();
@@ -113,19 +113,19 @@ public class VentaDao {
 
 // Detalle de ventas para la cadena completa por obra social o privado
 
-	public List<DBObject> traerVentas(Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
+	public List<Venta> traerVentas(Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
 		if (esObraSocial) {
-			query.put("fecha", new BasicDBObject("$gt", fechaInicial));
-			query.put("fecha", new BasicDBObject("$lt", fechaFinal));
+			query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+			query.put("fecha", new BasicDBObject("$lte", fechaFinal));
 			query.put("cliente.obraSocial", new BasicDBObject("$ne", null));
 		}
 
 		if (!esObraSocial) {
-			query.put("fecha", new BasicDBObject("$gt", fechaInicial));
-			query.put("fecha", new BasicDBObject("$lt", fechaFinal));
+			query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+			query.put("fecha", new BasicDBObject("$lte", fechaFinal));
 			query.put("cliente.obraSocial", new BasicDBObject("$eq", null));
 		}
 
@@ -133,13 +133,13 @@ public class VentaDao {
 
 		List<DBObject> ventasJSON = cursor.toArray();
 
-		return ventasJSON;
+		return JsonToObjectClass.jsonToVentas(ventasJSON);
 
 	}
 	// Detalle de ventas para la sucursal, por obra social o privado
 
 	public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
-		List<Venta> ventas = JsonToObjectClass.jsonToVentas(this.traerVentas(fechaInicial, fechaFinal, esObraSocial));
+		List<Venta> ventas = this.traerVentas(fechaInicial, fechaFinal, esObraSocial);
 		
 		List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
 		
@@ -154,8 +154,8 @@ public class VentaDao {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
-		query.put("fecha", new BasicDBObject("$gt", fechaInicial));
-		query.put("fecha", new BasicDBObject("$lt", fechaFinal));
+		query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+		query.put("fecha", new BasicDBObject("$lte", fechaFinal));
 		query.put("formaDePago", new BasicDBObject("nombre", medio));
 
 		DBCursor cursor = ventasCollection.find(query);
@@ -182,8 +182,8 @@ public class VentaDao {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
-		query.put("fecha", new BasicDBObject("$gt", fechaInicial));
-		query.put("fecha", new BasicDBObject("$lt", fechaFinal));
+		query.put("fecha", new BasicDBObject("$gte", fechaInicial));
+		query.put("fecha", new BasicDBObject("$lte", fechaFinal));
 		query.put("itemsVenta.producto.tipo", new BasicDBObject("$eq", tipo));
 
 		DBCursor cursor = ventasCollection.find(query);
