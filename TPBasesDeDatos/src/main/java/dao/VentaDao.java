@@ -113,20 +113,20 @@ public class VentaDao {
 
 // Detalle de ventas para la cadena completa por obra social o privado
 
-	public List<Venta> traerVentas(Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
+	public List<Venta> traerVentas(Date fechaInicial, Date fechaFinal, boolean esObraSocial, String obraSocial) {
 		DBCollection ventasCollection = database.getCollection("ventas");
 		DBObject query = new BasicDBObject();
 
 		if (esObraSocial) {
 			query.put("fecha", new BasicDBObject("$gte", fechaInicial));
 			query.put("fecha", new BasicDBObject("$lte", fechaFinal));
-			query.put("cliente.obraSocial", new BasicDBObject("$ne", null));
+			query.put("cliente.obraSocial.nombre", new BasicDBObject("$eq", obraSocial));
 		}
 
 		if (!esObraSocial) {
 			query.put("fecha", new BasicDBObject("$gte", fechaInicial));
 			query.put("fecha", new BasicDBObject("$lte", fechaFinal));
-			query.put("cliente.obraSocial", new BasicDBObject("$eq", null));
+			query.put("cliente.obraSocial.nombre", new BasicDBObject("$eq", null));
 		}
 
 		DBCursor cursor = ventasCollection.find(query);
@@ -138,8 +138,8 @@ public class VentaDao {
 	}
 	// Detalle de ventas para la sucursal, por obra social o privado
 
-	public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal, boolean esObraSocial) {
-		List<Venta> ventas = this.traerVentas(fechaInicial, fechaFinal, esObraSocial);
+	public List<Venta> traerVentas(String idSucursal, Date fechaInicial, Date fechaFinal, boolean esObraSocial, String obraSocial) {
+		List<Venta> ventas = this.traerVentas(fechaInicial, fechaFinal, esObraSocial, obraSocial);
 		
 		List<Venta> ventasFiltro = this.filtrarVentasPorSucursal(idSucursal, ventas);
 		
